@@ -1,7 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
+import csv
 
 def scrape_team_records():
+
+    # Create structure of new csv for scraped data
+    # Only run once
+    """ header = ['Team Name', 'Wins', 'Losses', 'W/L%'] 
+
+    # Write header as first row of csv
+     with open('NbaStandings2019Dataset.csv', 'w', newline='', encoding='UTF8') as f:
+        writer = csv.writer(f)
+        writer.writerow(header) """
+
     url = "https://www.basketball-reference.com/leagues/NBA_2019_standings.html"
 
     # Make a GET request to the URL
@@ -18,7 +29,6 @@ def scrape_team_records():
     west_rows = west_table.find_all('tr')
     east_rows = east_table.find_all('tr')
 
-    
 
     # Loop through each row and extract the team name, win-loss record, and other data
     for row in west_rows[1:]:
@@ -28,9 +38,12 @@ def scrape_team_records():
         wins = cells[0].text.strip()
         losses = int(cells[1].text.strip())
         win_loss_pct = float(cells[2].text.strip())
+        data = [team_name, wins, losses, win_loss_pct]
+        with open('NbaStandings2019Dataset.csv', 'a+', newline='', encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow(data)
 
-        # Print the team name and win-loss record
-        print(f"{team_name}: {wins}-{losses}, {win_loss_pct}")
+
 
     # Loop through each row and extract the team name, win-loss record, and other data
     for row in east_rows[1:]:
@@ -40,8 +53,16 @@ def scrape_team_records():
         wins = cells[0].text.strip()
         losses = int(cells[1].text.strip())
         win_loss_pct = float(cells[2].text.strip())
+        data = [team_name, wins, losses, win_loss_pct]
+        with open('NbaStandings2019Dataset.csv', 'a+', newline='', encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow(data)
 
         # Print the team name and win-loss record
-        print(f"{team_name}: {wins}-{losses}, {win_loss_pct}")
+        #print(f"{team_name}: {wins}-{losses}, {win_loss_pct}")
 
 scrape_team_records()
+
+
+# Insert scraped data to csv
+    #writer.writerow(data)
