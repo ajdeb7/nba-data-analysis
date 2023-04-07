@@ -1,7 +1,6 @@
 import pandas as pd 
 import numpy as np 
 
-
 nbaStandings = pd.read_csv('NbaStandings2019Dataset.csv')
 nbaPlayers = pd.read_csv('NBA_Players.csv')
 #print(nbaStandings)
